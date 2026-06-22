@@ -25,13 +25,3 @@ This repository contains the database definitions, interactive utilities, and co
 ### 4. Batch Operations & Reporting
 * **`TBSEODBATCH.cbl`**: The End-of-Day (EOD) reconciliation processor. It scans active reservations against the current system date, transforms expired or lapsed reservations into "no-show" forfeits, calculates lost revenue, and writes explicit audit-log records for accountability.
 * **`TBSANAREPT.cbl`**: An executive analytical report writer. It reads pre-sorted flight data to produce a printed control-break report (`QSYSPRT`) that calculates total capacities, bookings, PLF (Passenger Load Factor), and RASM (Revenue per Available Seat Mile) rolled up by region and system totals.
-
-## Compilation & Deployment
-
-To deploy this application on an IBM i system, the source code must be compiled in the correct dependency order.
-
-1. **Compile Database Physical Files:**
-   ```bash
-   CRTPF FILE(TBSDTA/TBSFLGHT) SRCFILE(TBSDTA/QDDSSRC)
-   CRTPF FILE(TBSDTA/TBSBOOKG) SRCFILE(TBSDTA/QDDSSRC)
-   CRTPF FILE(TBSDTA/TBSPAYLOG) SRCFILE(TBSDTA/QDDSSRC)
