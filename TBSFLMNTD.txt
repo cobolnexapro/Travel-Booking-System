@@ -1,0 +1,103 @@
+    A*================================================================*
+     A* DISPLAY FILE : TBSFLMNTD                                       *
+     A* PURPOSE      : 5250 screens for TBSFLMNT (Flight Inv. Maint.) *
+     A* COMPILE      : CRTDSPF FILE(TBSDTA/TBSFLMNTD) +               *
+     A*                        SRCFILE(TBSDTA/QDDSSRC)                 *
+     A* NOTE         : INDARA intentionally OMITTED so that ILE COBOL *
+     A*                generates option/response indicators as INnn   *
+     A*                fields inside each record format (referenced    *
+     A*                directly by the program).                       *
+     A*================================================================*
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      PRINT
+     A                                      CA03(03 'Exit')
+     A                                      CA05(05 'Refresh')
+     A                                      CA12(12 'Cancel')
+     A*----------------------------------------------------------------*
+     A* CONTROL / PROMPT FORMAT                                        *
+     A*----------------------------------------------------------------*
+     A          R CTLFMT
+     A                                      TEXT('Control / Prompt Fmt')
+     A                                  1  2DATE EDTCDE(Y)
+     A                                  1 27'Flight Inventory Maintenanc-
+     A                                      e'
+     A                                      DSPATR(HI)
+     A                                  1 71TIME
+     A                                  3  2'Flight Number  . . . . :'
+     A            CFLIGHT        6A  B  3 28
+     A  61                                  DSPATR(RI)
+     A  61                                  DSPATR(PC)
+     A                                  5  2'Action (A/C/D/I) . . . :'
+     A            CACTION        1A  B  5 28
+     A  62                                  DSPATR(RI)
+     A  62                                  DSPATR(PC)
+     A                                  7  4'A = Add a new flight'
+     A                                  8  4'C = Change an existing flig-
+     A                                      ht'
+     A                                  9  4'D = Delete a flight'
+     A                                 10  4'I = Inquiry (display only)'
+     A                                 22  2'F3=Exit   F5=Refresh   F12=-
+     A                                      Cancel'
+     A                                      COLOR(BLU)
+     A            CMSG          60A  O 23  2DSPATR(HI)
+     A                                      COLOR(RED)
+     A*----------------------------------------------------------------*
+     A* DETAIL MAINTENANCE FORMAT                                      *
+     A*  IN70 = protect all input fields (Inquiry / Delete view)       *
+     A*  IN71..IN80 = per-field error reverse-image flags              *
+     A*----------------------------------------------------------------*
+     A          R DTLFMT
+     A                                      TEXT('Detail Maintenance Fmt')
+     A                                  1 27'Flight Inventory Detail'
+     A                                      DSPATR(HI)
+     A                                  3  2'Flight Number  . . . . :'
+     A            DFLIGHT        6A  O  3 28DSPATR(HI)
+     A                                  5  2'Carrier Code . . . . . :'
+     A            DCARRIER       3A  B  5 28
+     A  70                                  DSPATR(PR)
+     A  71                                  DSPATR(RI)
+     A                                  5 40'(ICAO 3-letter)'
+     A                                      COLOR(BLU)
+     A                                  6  2'Departure Airport  . . :'
+     A            DDEPART        3A  B  6 28
+     A  70                                  DSPATR(PR)
+     A  72                                  DSPATR(RI)
+     A                                  7  2'Arrival Airport  . . . :'
+     A            DARRIVE        3A  B  7 28
+     A  70                                  DSPATR(PR)
+     A  73                                  DSPATR(RI)
+     A                                  9  2'Total Seat Capacity  . :'
+     A            DSEATCAP       4S 0B  9 28
+     A  70                                  DSPATR(PR)
+     A  74                                  DSPATR(RI)
+     A                                 10  2'First Class Seats  . . :'
+     A            DFSTSEA        4S 0B 10 28
+     A  70                                  DSPATR(PR)
+     A  75                                  DSPATR(RI)
+     A                                 11  2'Business Seats . . . . :'
+     A            DBUSSEA        4S 0B 11 28
+     A  70                                  DSPATR(PR)
+     A  76                                  DSPATR(RI)
+     A                                 12  2'Premium Seats  . . . . :'
+     A            DPRMSEA        4S 0B 12 28
+     A  70                                  DSPATR(PR)
+     A  77                                  DSPATR(RI)
+     A                                 13  2'Economy Seats  . . . . :'
+     A            DECOSEA        4S 0B 13 28
+     A  70                                  DSPATR(PR)
+     A  78                                  DSPATR(RI)
+     A                                 15  2'Base Price . . . . . . :'
+     A            DPRICE        11S 2B 15 28
+     A  70                                  DSPATR(PR)
+     A  79                                  DSPATR(RI)
+     A                                 17  2'Status (A/I/S/X) . . . :'
+     A            DSTATUS        1A  B 17 28
+     A  70                                  DSPATR(PR)
+     A  80                                  DSPATR(RI)
+     A                                 17 40'A=Active I=Inactive S=Sched-
+     A                                       X=Cancelled'
+     A                                      COLOR(BLU)
+     A                                 22  2'F3=Exit   F12=Cancel'
+     A                                      COLOR(BLU)
+     A            DMSG          60A  O 23  2DSPATR(HI)
+     A                                      COLOR(RED)
